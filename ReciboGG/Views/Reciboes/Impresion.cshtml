@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Impresion";
+}
+@if (ViewData.ContainsKey("Report"))
+{
+    @Html.Raw(ViewData["Report"])
+}
+else
+{
+    <h1>Recibo no encontrado</h1>
+}

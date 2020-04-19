@@ -77,7 +77,6 @@
             <PropertyRef Name="Id_Tutor" />
           </Key>
           <Property Name="Id_Tutor" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id_Alumno" Type="bigint" Nullable="false" />
           <Property Name="Id_Tipo_Tutor" Type="bigint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellidos" Type="varchar" MaxLength="50" />
@@ -295,7 +294,6 @@
             <PropertyRef Name="Id_Tutor" />
           </Key>
           <Property Name="Id_Tutor" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Alumno" Type="Int64" Nullable="false" />
           <Property Name="Id_Tipo_Tutor" Type="Int64" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -512,7 +510,6 @@
             <EntityTypeMapping TypeName="RecibosGGModel.Tutor">
               <MappingFragment StoreEntitySet="Tutor">
                 <ScalarProperty Name="Id_Tutor" ColumnName="Id_Tutor" />
-                <ScalarProperty Name="Id_Alumno" ColumnName="Id_Alumno" />
                 <ScalarProperty Name="Id_Tipo_Tutor" ColumnName="Id_Tipo_Tutor" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />

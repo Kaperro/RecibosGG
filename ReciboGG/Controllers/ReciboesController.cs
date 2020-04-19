@@ -8,6 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using ReciboGG.Models.DB;
 
+using FastReport;
+using FastReport.Export.PdfSimple;
+using FastReport.Utils;
+using System.IO;
+
 namespace ReciboGG.Controllers
 {
     public class ReciboesController : Controller
@@ -55,6 +60,15 @@ namespace ReciboGG.Controllers
             if (ModelState.IsValid)
             {
                 db.Reciboes.Add(recibo);
+                db.SaveChanges();
+                var estudiante = db.Alumnoes
+                    .Where(x => x.Id_Alumno == recibo.Id_Alumno)
+                    .FirstOrDefault();
+                if(estudiante != null)
+                {
+                    estudiante.Solvente = true;
+                }
+                db.Entry(estudiante).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -135,6 +149,50 @@ namespace ReciboGG.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // GET: Impresion
+        public ActionResult Impresion(long id)
+        {
+            var recibo = db.Reciboes
+                .Where(r => r.Id_Recibo == id)
+                .Include(r => r.Alumno)
+                .Include(r => r.Pago_Detalle)
+                .Include(r => r.Tutor)
+                .FirstOrDefault();
+
+            Report report = new Report();
+
+            string thisFolder = Config.ApplicationFolder;
+
+            string path = Path.Combine(thisFolder, "Reportes\\Recibo.frx");
+            string fullPath = Path.GetFullPath(path);
+
+            report.Load(fullPath);
+
+            var detalles = new List<Pago_Detalle>() { recibo.Pago_Detalle };
+
+            report.RegisterData(detalles, "Recibo");
+
+            var nombreAlumno = $"{recibo.Alumno.Nombre} {recibo.Alumno.Apellido}";
+            var nombreTutor = $"{recibo.Tutor.Nombre} {recibo.Tutor.Apellidos}";
+            var fecha = DateTime.Now.ToLongDateString();
+
+            report.SetParameterValue("Alumno", nombreAlumno);
+            report.SetParameterValue("Tutor", nombreTutor);
+            report.SetParameterValue("Fecha", fecha);
+
+            var nombreArchivo = $"{fecha} {nombreAlumno} {nombreTutor}.pdf";
+
+            report.Prepare();
+
+            PDFSimpleExport export = new PDFSimpleExport();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                export.Export(report, ms);             
+                ms.Flush();
+                return File(ms.ToArray(), "application/pdf", nombreArchivo);
+            }
         }
     }
 }

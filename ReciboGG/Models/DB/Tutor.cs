@@ -22,7 +22,7 @@ namespace ReciboGG.Models.DB
         }
     
         public long Id_Tutor { get; set; }
-        public long Id_Alumno { get; set; }
+        //public long Id_Alumno { get; set; }
         public long Id_Tipo_Tutor { get; set; }
         public string Nombre { get; set; }
         public string Apellidos { get; set; }

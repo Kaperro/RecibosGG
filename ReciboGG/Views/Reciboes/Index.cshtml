@@ -9,7 +9,7 @@
 <p>
     <ul>
         <li>@Html.ActionLink("Create New", "Create")</li>
-        <li> @Html.ActionLink("Pago Detalle", "Nuevo Detalle de pago", "Pago_Detalle")</li>
+        <li> @Html.ActionLink("Pago Detalle", "Index", "Pago_Detalle")</li>
     </ul>
 </p>
 <table class="table">
@@ -50,9 +50,11 @@
             @Html.DisplayFor(modelItem => item.Tutor.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Recibo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_Recibo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Recibo })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id_Recibo }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id_Recibo }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id_Recibo }) |
+            @Html.ActionLink("Impresion", "Impresion", new { id = item.Id_Recibo })
+
         </td>
     </tr>
 }
