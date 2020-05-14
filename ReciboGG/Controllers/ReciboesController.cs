@@ -66,7 +66,7 @@ namespace ReciboGG.Controllers
                     .FirstOrDefault();
                 if(estudiante != null)
                 {
-                    estudiante.Solvente = true;
+                    //estudiante.Solvente = true;
                 }
                 db.Entry(estudiante).State = EntityState.Modified;
                 db.SaveChanges();
@@ -155,6 +155,7 @@ namespace ReciboGG.Controllers
         public ActionResult Impresion(long id)
         {
             var recibo = db.Reciboes
+                .AsNoTracking()
                 .Where(r => r.Id_Recibo == id)
                 .Include(r => r.Alumno)
                 .Include(r => r.Pago_Detalle)
@@ -186,10 +187,51 @@ namespace ReciboGG.Controllers
 
             report.Prepare();
 
+            var alumno = db.Alumnoes.Where(x => x.Id_Alumno == recibo.Alumno.Id_Alumno).FirstOrDefault();
+            alumno.Solvente = true;
+            db.Entry(alumno).State = EntityState.Modified;
+            db.SaveChanges();
+
             PDFSimpleExport export = new PDFSimpleExport();
             using (MemoryStream ms = new MemoryStream())
             {
                 export.Export(report, ms);             
+                ms.Flush();
+                return File(ms.ToArray(), "application/pdf", nombreArchivo);
+            }
+        }
+
+        // GET: Impresion
+        public ActionResult Morosos()
+        {
+            var alumnos = db.Alumnoes
+                .Where(r => r.Solvente.Value != true)
+                .ToList();
+
+            Report report = new Report();
+
+            string thisFolder = Config.ApplicationFolder;
+
+            string path = Path.Combine(thisFolder, "Reportes\\Morosos.frx");
+            string fullPath = Path.GetFullPath(path);
+
+            report.Load(fullPath);
+
+
+            report.RegisterData(alumnos, "Alumno");
+
+            var fecha = DateTime.Now.ToLongDateString();
+
+            report.SetParameterValue("Fecha", fecha);
+
+            var nombreArchivo = $"{fecha} Alumnos Morosos.pdf";
+
+            report.Prepare();
+
+            PDFSimpleExport export = new PDFSimpleExport();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                export.Export(report, ms);
                 ms.Flush();
                 return File(ms.ToArray(), "application/pdf", nombreArchivo);
             }

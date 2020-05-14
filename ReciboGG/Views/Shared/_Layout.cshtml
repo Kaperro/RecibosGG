@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,12 +22,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Recibos", "Index", "Reciboes")</li>
-                    <li>@Html.ActionLink("Tutores", "Index", "Tutors")</li>
-                    <li>@Html.ActionLink("Tutores Tipo", "Index", "Tipo_Tutor")</li>
-                    <li>@Html.ActionLink("Maestros", "Index", "Maestras")</li>
-                    <li>@Html.ActionLink("Alumno", "Index", "Alumno")</li>
-                    <li>@Html.ActionLink("Grados", "Index", "Grado")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (User.Identity.GetUserName() == "admingg@mail.com")
+                        {
+                            <li>@Html.ActionLink("Tutores", "Index", "Tutors")</li>
+                            <li>@Html.ActionLink("Tutores Tipo", "Index", "Tipo_Tutor")</li>
+                            <li>@Html.ActionLink("Maestros", "Index", "Maestras")</li>
+                            <li>@Html.ActionLink("Grados", "Index", "Grado")</li>
+                        }
+                        <li>@Html.ActionLink("Alumno", "Index", "Alumno")</li>
+                        <li>@Html.ActionLink("Recibos", "Index", "Reciboes")</li>
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
