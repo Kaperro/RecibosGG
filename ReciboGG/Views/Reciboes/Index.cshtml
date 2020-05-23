@@ -1,17 +1,18 @@
 ﻿@model IEnumerable<ReciboGG.Models.DB.Recibo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Recibos Pagina Principal";
 }
 
-<h2>Index</h2>
-
+<h2>Recibos</h2>
 <p>
-    <ul>
-        <li>@Html.ActionLink("Create New", "Create")</li>
-        <li> @Html.ActionLink("Pago Detalle", "Index", "Pago_Detalle")</li>
-    </ul>
+
+    @Html.ActionLink("Nuevo Recibo", "Create") |
+    @Html.ActionLink("Pago Detalle", "Index", "Pago_Detalle")
+
 </p>
+
+
 <table class="table">
     <tr>
         <th>
@@ -32,31 +33,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lugar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Alumno.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pago_Detalle.Detalle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tutor.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id_Recibo }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id_Recibo }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id_Recibo }) |
-            @Html.ActionLink("Impresion", "Impresion", new { id = item.Id_Recibo })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lugar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pago_Detalle.Detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutor.Nombre)
+            </td>
+            <td>
 
-        </td>
-    </tr>
-}
+
+                @Html.ActionLink("Impresion", "Impresion", new { id = item.Id_Recibo })
+
+            </td>
+        </tr>
+    }
+
 
 </table>

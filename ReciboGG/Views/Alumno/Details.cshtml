@@ -1,10 +1,10 @@
 ﻿@model ReciboGG.Models.DB.Alumno
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles Alumno";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
     <h4>Alumno</h4>
@@ -53,6 +53,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Alumno }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id_Alumno }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>

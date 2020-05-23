@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<ReciboGG.Models.DB.Pago_Detalle>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pago Detalle";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,9 @@
             @Html.DisplayFor(modelItem => item.Detalle)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Pago_Detalle }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_Pago_Detalle }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Pago_Detalle })
+            @Html.ActionLink("Editar", "edit", new { id = item.Id_Pago_Detalle }) |
+        
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id_Pago_Detalle })
         </td>
     </tr>
 }
